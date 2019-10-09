@@ -1,5 +1,6 @@
-export const initialState = [
+export const initialState = {
 
+ todos: [
     {item: 'Learn about reducers',
     completed: false,
     id: 3892987589},
@@ -11,7 +12,7 @@ export const initialState = [
     {item: 'Do something else',
     completed: false,
     id: 3892984524}
-]
+]}
 
 export const reducer = (state, action) => {
     switch (action.type) {
@@ -23,7 +24,11 @@ export const reducer = (state, action) => {
             };
             return (
                 [...state, newTodo]
-            )
+            );
+        case 'TOGGLE_COMPLETED':
+            return {
+                ...state, completed: !state.completed
+            };
  
     default:
         return state;

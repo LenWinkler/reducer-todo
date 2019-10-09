@@ -20,15 +20,19 @@ const TodoList = () => {
         dispatch({ type: 'ADD_NEW_TODO', payload: newTodoText});
         setNewTodoText('');
 
-};
+    };
+
+    const toggleCompleted = id => {
+        dispatch({ type: 'TOGGLE_COMPLETED', payload: id })
+    }
 
 
     return (
         <div>
             <div>
-            {state.map(item => {
+            {state.todos.map(item => {
                 return(
-                <Todo key={item.id} item={item} />
+                <Todo key={item.id} item={item} toggleCompleted={toggleCompleted} />
                 )
             })}
             </div>
