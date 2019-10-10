@@ -1,37 +1,60 @@
 export const initialState = {
-
- todos: [
-    {item: 'Learn about reducers',
-    completed: false,
-    id: 3892987589},
-
-    {item: 'Build Todo App with reducer hook',
-    completed: false,
-    id: 3892987234},
-
-    {item: 'Do something else',
-    completed: false,
-    id: 3892984524}
-]}
+    todos: [
+        {
+            todo: "Do something",
+            id: 1234,
+            completed: false
+        },
+        {
+            todo: "Do another something",
+            id: 12345,
+            completed: false
+        },
+        {
+            todo: "Do nothing",
+            id: 123456,
+            completed: false
+        }
+    ]
+};
 
 export const reducer = (state, action) => {
     switch (action.type) {
-        case 'ADD_NEW_TODO':
-            const newTodo = {
-                item: action.payload,
-                completed: false,
-                id: Date.now()
+        case 'ADD_TODO':
+            let newTodo = {
+                todo: action.payload,
+                id: Date.now(),
+                completed: false
             };
-            return (
-                [...state, newTodo]
-            );
-        case 'TOGGLE_COMPLETED':
-            return {
-                ...state, completed: !state.completed
-            };
- 
-    default:
-        return state;
 
+            return {
+                ...state,
+                todos: [...state.todos, newTodo]
+            };
+
+        case 'TOGGLE_TODO':
+            let updatedTodos = state.todos.map(item => {
+                if (item.id === action.payload) {
+                    return {
+                        ...item,
+                        completed: !item.completed
+                    };
+                } else {
+                    return item;
+                } 
+            });
+            return {
+                ...state,
+                todos: updatedTodos
+            };
+
+        case 'CLEAR_TODOS':
+            return {
+                ...state,
+                todos: state.todos.filter(item => !item.completed)
+            };
+
+            default:
+            return state;
     }
-}
+};
